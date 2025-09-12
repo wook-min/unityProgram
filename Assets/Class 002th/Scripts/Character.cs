@@ -3,13 +3,7 @@
 public class Character : MonoBehaviour
 {
     // SRP 단일 책임 원칙
-    public Ability ability;
-
-    private void Awake()
-    {
-        ability = new Ability();
-        ability.Init(10, 10, 10, 10);
-    }
+    [SerializeField] private Ability ability;
 
     private void Start()
     {
