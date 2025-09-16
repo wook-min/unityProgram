@@ -11,7 +11,7 @@ public class ItemManager : MonoBehaviour
     private void Start()
     {
         Init();
-        count = items.Length - 1;
+        
     }
 
     private void Update()
@@ -36,6 +36,8 @@ public class ItemManager : MonoBehaviour
         {
             element.gameObject.SetActive(false);
         }
+
+        count = items.Length - 1;
     }
 
     private void ChangeWeapon()
