@@ -3,30 +3,32 @@ using UnityEngine.UI;
 
 public class Selectable : MonoBehaviour
 {
-    private Button button;
+    // [SerializeField] Text titleText;
+    private Text text;
+    // 캐싱 기법 : 참조 변수로 저장해두고 그 변수로 사용하는 것.(계속 탐색할 때마다 최소 O(n)이 걸리므로)
 
     private void Awake()
     {
-        button = GetComponent<Button>();
+        text = GetComponentInChildren<Text>();
     }
 
     public void Enter()
     {
-        button.GetComponentInChildren<Text>().fontSize = 100;
+        text.fontSize = 100;
     }
 
     public void Exit()
     {
-        button.GetComponentInChildren<Text>().fontSize = 75;
+        text.fontSize = 75;
     }
 
     public void Down()
     {
-        button.GetComponentInChildren<Text>().fontSize = 50;
+        text.fontSize = 50;
     }
 
     public void Up()
     {
-        button.GetComponentInChildren<Text>().fontSize = 100;
+        text.fontSize = 100;
     }
 }
