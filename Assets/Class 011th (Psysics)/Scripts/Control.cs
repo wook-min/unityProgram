@@ -20,9 +20,16 @@ public class Control : MonoBehaviour
     private Rigidbody RB;
     private Vector3 direction;
     [SerializeField] private float addForce = 5f;
+    [SerializeField] private float changeForce = 0.7f;
+    [SerializeField] ForceMode forceMode;
+    private bool trigger = false;
+
+    [SerializeField] Vector3 soarDir;
+    [SerializeField] float soarForce;
 
     private void Awake()
     {
+        forceMode = ForceMode.Acceleration;
         RB = GetComponent<Rigidbody>();
     }
 
@@ -33,7 +40,12 @@ public class Control : MonoBehaviour
 
     private void FixedUpdate()
     {
-        RB.AddForce(direction * addForce, ForceMode.Acceleration);
+        RB.AddForce(direction * addForce, forceMode);
+
+        //if (trigger)
+        //{
+        //    Soar();
+        //}
     }
 
     private void control()
@@ -67,5 +79,34 @@ public class Control : MonoBehaviour
         direction.z = Input.GetAxisRaw("Vertical");
 
         direction.Normalize();
+    }
+
+    #region 한번만 실행
+    public void Soar()
+    {
+        RB.AddForce(soarDir * soarForce, ForceMode.Impulse);
+        trigger = false;
+    }
+    public void TriggerOn()
+    {
+        trigger = true;
+    }
+    #endregion
+
+    public void Soar(bool t)
+    {
+        direction = Vector3.up;
+        forceMode = ForceMode.Impulse;
+        addForce = changeForce;
+    }
+
+    public void Revert()
+    {
+        direction.x = Input.GetAxisRaw("Horizontal");
+        direction.z = Input.GetAxisRaw("Vertical");
+
+        direction.Normalize();
+        forceMode = ForceMode.Acceleration;
+        addForce = 5f;
     }
 }

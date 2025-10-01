@@ -2,26 +2,27 @@
 
 public class Sensor : MonoBehaviour
 {
-    [SerializeField] private Vector3 direction;
-    [SerializeField] private float addForce;
-
     private void OnTriggerEnter(Collider other)
     {
-        Debug.Log($"TriggerEnter At {gameObject.name}");
-        if(other.TryGetComponent<Rigidbody>(out var RB))
+        Debug.Log($"TriggerEnter {other.gameObject.name}");
+        if(other.CompareTag("Authorize"))
         {
-            RB.AddForce(direction * addForce, ForceMode.Impulse);
+            other.GetComponent<Control>().Soar();
         }
     }
 
     private void OnTriggerStay(Collider other)
     {
-        Debug.Log($"Trigger Stay At {gameObject.name}");
+        Debug.Log($"Trigger Stay {other.gameObject.name}");
     }
 
     private void OnTriggerExit(Collider other)
     {
-        Debug.Log($"Trigger Exit At {gameObject.name}");
+        Debug.Log($"Trigger Exit {other.gameObject.name}");
+        if(other.CompareTag("Authorize"))
+        {
+            other.GetComponent<Control>().Revert();
+        }
     }
 
     // 트리거 이벤트 함수
